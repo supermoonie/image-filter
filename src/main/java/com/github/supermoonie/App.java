@@ -1,8 +1,11 @@
 package com.github.supermoonie;
 
+import com.github.supermoonie.gui.AppendDialog;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -14,12 +17,12 @@ import java.io.IOException;
  * @author supermoonie
  */
 public class App extends Application {
-    public static void main(String[] args) throws IOException {
 
-    }
+    private Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.primaryStage = primaryStage;
         GridPane gridPane = new GridPane();
         gridPane.setStyle("-fx-padding: 10;");
         gridPane.setHgap(10);
@@ -34,7 +37,8 @@ public class App extends Application {
     }
 
     private void initButtons(GridPane gridPane) {
-        Button test = new Button("Append");
-        gridPane.add(test, 0, 0, 1, 1);
+        Button appendButton = new Button("Append");
+        appendButton.setOnMouseClicked(mouseEvent -> new AppendDialog(primaryStage));
+        gridPane.add(appendButton, 0, 0, 1, 1);
     }
 }

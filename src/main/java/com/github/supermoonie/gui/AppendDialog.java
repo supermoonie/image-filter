@@ -1,18 +1,16 @@
 package com.github.supermoonie.gui;
 
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import com.github.supermoonie.imgproc.Append;
+import com.github.supermoonie.util.AlertUtil;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.List;
+import java.io.IOException;
 
 /**
  * @author supermoonie
@@ -20,36 +18,55 @@ import java.util.List;
  */
 public class AppendDialog {
 
-    private BorderPane borderPane;
+    private final FileChooser fileChooser;
 
-    private Stage stage;
+    private final Stage owner;
 
-    private Scene scene;
-
-    private FileChooser fileChooser;
-
-    public AppendDialog() {
+    public AppendDialog(Stage owner) {
+        this.owner = owner;
         fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("*.png; *.jpg");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
         fileChooser.setSelectedExtensionFilter(filter);
-        borderPane = new BorderPane();
-        scene = new Scene(borderPane);
-        stage = new Stage();
-        stage.setScene(scene);
-        GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setStyle("-fx-padding: 10;");
-        Button add = new Button("Add");
-        add.setOnMouseClicked(mouseEvent -> {
-            List<File> files = fileChooser.showOpenMultipleDialog(stage);
-            if (null == files || files.size() == 0) {
-                return;
-            }
 
-        });
-        gridPane.add(add, 0, 0, 4, 1);
-        gridPane.setAlignment(Pos.CENTER);
+        Image firstImage = select();
+        if (null == firstImage) {
+            return;
+        }
+        Stage firstStage = new Stage();
+        new ImageViewWrapper(firstStage, firstImage, "First", false);
+        firstStage.show();
+        firstStage.toFront();
 
+        Image secondImage = select();
+        if (null == secondImage) {
+            return;
+        }
+        Stage secondStage = new Stage();
+        new ImageViewWrapper(secondStage, secondImage, "Second", false);
+        secondStage.show();
+        secondStage.toFront();
+
+        Append append = new Append(SwingFXUtils.fromFXImage(firstImage, null));
+        BufferedImage dest = append.appendRight(SwingFXUtils.fromFXImage(secondImage, null));
+        Image target = SwingFXUtils.toFXImage(dest, null);
+
+        Stage stage = new Stage();
+        new ImageViewWrapper(stage, target, "Target", true);
+        stage.show();
+        stage.toFront();
+    }
+
+    private Image select() {
+        File file = fileChooser.showOpenDialog(owner);
+        if (null == file) {
+            return null;
+        }
+        try {
+            BufferedImage bufferedImage = ImageIO.read(file);
+            return SwingFXUtils.toFXImage(bufferedImage, null);
+        } catch (IOException e) {
+            AlertUtil.error(e);
+            return null;
+        }
     }
 }
