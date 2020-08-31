@@ -1,21 +1,40 @@
 package com.github.supermoonie;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
-import static com.github.supermoonie.gui.ImageViewer.imshow;
+import java.io.IOException;
 
 /**
  * Hello world!
  *
  * @author supermoonie
  */
-public class App 
-{
-    public static void main( String[] args ) throws IOException {
-        imshow("src_1", ImageIO.read(new FileInputStream(new File("D:/opencv-images/lena.jpg"))));
-        imshow("src_2", ImageIO.read(new FileInputStream(new File("D:/opencv-images/baboon.jpg"))));
+public class App extends Application {
+    public static void main(String[] args) throws IOException {
+
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        GridPane gridPane = new GridPane();
+        gridPane.setStyle("-fx-padding: 10;");
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        initButtons(gridPane);
+        Scene scene = new Scene(gridPane);
+        primaryStage.setScene(scene);
+        primaryStage.setWidth(400);
+        primaryStage.setHeight(300);
+        primaryStage.show();
+        primaryStage.toFront();
+    }
+
+    private void initButtons(GridPane gridPane) {
+        Button test = new Button("Append");
+        gridPane.add(test, 0, 0, 1, 1);
     }
 }
