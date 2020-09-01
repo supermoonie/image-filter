@@ -8,11 +8,11 @@ import java.awt.image.BufferedImage;
  * @author supermoonie
  * @since 2020/8/31
  */
-public class Append {
+public class AppendFilter {
 
     private final BufferedImage center;
 
-    public Append(BufferedImage center) {
+    public AppendFilter(BufferedImage center) {
         this.center = center;
     }
 

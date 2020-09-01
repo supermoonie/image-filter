@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="525.0" minWidth="500.0" prefHeight="525.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.supermoonie.gui.LightningImageView">
+   <children>
+      <BorderPane fx:id="root" layoutX="119.0" layoutY="127.0" minHeight="525.0" minWidth="500.0" prefHeight="525.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+         </center>
+         <bottom>
+            <HBox alignment="CENTER" prefHeight="25.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="zoomOutButton" mnemonicParsing="false" text="放大" />
+                  <Button fx:id="zoomInButton" mnemonicParsing="false" text="缩小" />
+                  <Button fx:id="originalSwitchButton" mnemonicParsing="false" text="原始大小" />
+                  <Label fx:id="colorLabel" text="#ffffff" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" text="保存" />
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </HBox>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>

@@ -1,6 +1,6 @@
 package com.github.supermoonie.gui;
 
-import com.github.supermoonie.imgproc.Append;
+import com.github.supermoonie.imgproc.AppendFilter;
 import com.github.supermoonie.util.AlertUtil;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
@@ -46,8 +46,8 @@ public class AppendDialog {
         secondStage.show();
         secondStage.toFront();
 
-        Append append = new Append(SwingFXUtils.fromFXImage(firstImage, null));
-        BufferedImage dest = append.appendRight(SwingFXUtils.fromFXImage(secondImage, null));
+        AppendFilter appendFilter = new AppendFilter(SwingFXUtils.fromFXImage(firstImage, null));
+        BufferedImage dest = appendFilter.appendRight(SwingFXUtils.fromFXImage(secondImage, null));
         Image target = SwingFXUtils.toFXImage(dest, null);
 
         Stage stage = new Stage();
